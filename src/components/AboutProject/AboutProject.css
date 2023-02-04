@@ -1,0 +1,134 @@
+.about-project {
+  width: inherit;
+  min-height: fit-content;
+  background-color: #202020;
+  padding: 110px 70px 95px;
+  box-sizing: border-box;
+}
+
+.about-project__container {
+  display: flex;
+  column-gap: 40px;
+  padding: 70px 0 110px;
+}
+
+.about-project__card {
+  max-width: 550px;
+  width: 100%;
+}
+
+.about-project__subtitle {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.about-project__paragraph {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  padding-top: 26px;
+  margin: 0;
+}
+
+.about-project__timeline-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 1fr minmax(fit-content, fit-content);
+  box-sizing: border-box;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.about-project__timeline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  grid-column: 2/6;
+  background-color: #303030;
+  margin: 0;
+}
+
+.about-project__timeline_type_backend {
+  grid-column: 1/2;
+  background-color: #3ddc84;
+  color: #000000;
+}
+
+.about-project__direction-of-development {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column: 1/2;
+  color: #8b8b8b;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.about-project__direction-of-development:last-of-type {
+  grid-column: 2/6;
+}
+
+@media screen and (max-width: 768px) {
+  .about-project {
+    padding: 90px 50px 75px;
+  }
+
+  .about-project__container {
+    column-gap: 30px;
+    padding: 70px 0 93px;
+  }
+
+  .about-project__paragraph {
+    font-size: 12px;
+    line-height: 18px;
+    padding-top: 22px;
+  }
+
+  .about-project__timeline-container {
+    grid-template-columns: 140px repeat(4, 1fr);
+  }
+}
+
+@media screen and (max-width: 456px) {
+  .about-project {
+    padding: 70px 18px 58px;
+  }
+
+  .about-project__container {
+    flex-direction: column;
+    row-gap: 56px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .about-project__subtitle {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .about-project__paragraph {
+    font-size: 11px;
+    line-height: 16px;
+    padding-top: 16px;
+  }
+
+  .about-project__timeline-container {
+    grid-template-columns: 100px repeat(4, 1fr);
+  }
+
+  .about-project__timeline-container {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .about-project__direction-of-development {
+    font-size: 11px;
+    line-height: 13px;
+  }
+}

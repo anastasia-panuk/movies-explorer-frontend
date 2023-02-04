@@ -1,0 +1,126 @@
+.profile {
+  width: inherit;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 74px;
+  padding-bottom: 70px;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.profile__form {
+  display: flex;
+  flex-direction: column;
+  max-width: 410px;
+  width: 100%;
+}
+
+.profile__form-title {
+  padding-bottom: 123px;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  margin: 0;
+}
+
+.profile__form-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding-bottom: 203px;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  row-gap: 18px;
+}
+
+.profile__form-input {
+  background: none;
+  border: none;
+  outline: none;
+  padding-bottom: 17px;
+  color: #fff;
+  direction: rtl;
+}
+
+.profile__form-submit-button {
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  cursor: pointer;
+  align-self: center;
+  transition: 0.3s;
+  padding: 0;
+}
+
+.profile__form-link {
+  margin: 0;
+  padding-top: 16px;
+  align-self: center;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  color: #ee3465;
+  transition: 0.3s;
+}
+
+.profile__form-input:focus {
+  border-bottom: 1px solid #4285F4;
+}
+
+.profile__form-submit-button:hover {
+  transform: scale(1.03);
+}
+
+.profile__form-link:hover {
+  transform: scale(1.03);
+}
+
+.profile__form-input::placeholder {
+  color: #424242;
+}
+
+@media screen and (max-width: 768px) {
+  .profile {
+    padding-top: 236px;
+  }
+
+  .profile__form-title {
+    padding-bottom: 96px;
+  }
+
+  .profile__form-container {
+    padding-bottom: 193px;
+  }
+}
+
+@media screen and (max-width: 456px) {
+  .profile {
+    padding-top: 70px;
+  }
+
+  .profile__form {
+    padding-left: 30px;
+    padding-right: 30px;
+    max-width: 260px;
+  }
+
+  .profile__form-title {
+    padding-bottom: 80px;
+  }
+
+  .profile__form-input {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .profile__form-container {
+    padding-bottom: 356px;
+  }
+}

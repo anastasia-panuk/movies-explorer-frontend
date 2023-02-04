@@ -1,0 +1,10 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  max-width: 1280px;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1;
+}
