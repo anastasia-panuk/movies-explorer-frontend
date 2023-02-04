@@ -32,6 +32,7 @@ function Login() {
               name="email"
               type="email"
               placeholder="Адрес Вашей электоронной почты"
+              required
             ></input>
             <span className="form__input-span">Пароль</span>
             <input
@@ -39,6 +40,7 @@ function Login() {
               name="password"
               type="password"
               placeholder="Ваш надежный пароль"
+              required
             ></input>
           </>
         }

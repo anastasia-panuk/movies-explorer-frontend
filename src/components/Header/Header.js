@@ -2,9 +2,10 @@ import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import Navigation from "../Navigation/Navigation";
+import AccountButton from "../AccountButton/AccountButton";
 
 import logo from "../../images/logo.svg";
-import icon from "../../images/login_icon.svg";
+// import icon from "../../images/login_icon.svg";
 
 function Header() {
   const pathname = ["/movies", "/saved-movies", "profile"];
@@ -16,27 +17,19 @@ function Header() {
       </HashLink>
       <nav className="header__conteiner header__conteiner_type_logged-in">
         <div className="header__button-container">
-          <Link to="/movies">
+          <Link to="/movies" className="header__link">
             <button className="header__button header__button_type_logged-in">
               Фильмы
             </button>
           </Link>
-          <Link to="/saved-movies">
+          <Link to="/saved-movies" className="header__link">
             <button className="header__button header__button_type_logged-in">
               Сохраненные фильмы
             </button>
           </Link>
         </div>
-        <Link
-          to="/profile"
-          className="header__button header__button_type_account"
-        >
-          <button className="header__button header__button_type_account">
-            Аккаунт
-            <div className="header__button-square">
-              <img className="header__button-icon" src={icon} alt="Иконка" />
-            </div>
-          </button>
+        <Link to={"/profile"} className="header__link">
+          <AccountButton name={"header__button"}></AccountButton>
         </Link>
       </nav>
     </header>

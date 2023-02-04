@@ -102,6 +102,8 @@
   .about-me__link {
     font-size: 14px;
     line-height: 17px;
+    left: 0px;
+    top: -16px;
   }
 
   .about-me__photo {
@@ -110,7 +112,7 @@
   }
 }
 
-@media screen and (max-width: 620px) {
+@media screen and (max-width: 680px) {
   .about-me__container {
     display: flex;
     flex-direction: column-reverse;
@@ -123,8 +125,8 @@
   }
 
   .about-me__link {
-    position: static;
-    padding-top: 40px;
+    left: 0px;
+    top: 40px;
     font-size: 14px;
     line-height: 17px;
   }

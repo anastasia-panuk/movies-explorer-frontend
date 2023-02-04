@@ -6,11 +6,11 @@ import MoviesCardMore from "../MoviesCardMore/MoviesCardMore";
 
 function Movies() {
   return (
-    <main className="movies">
+    <ul className="movies">
       <SearchForm />
       <MoviesCardsList />
       <MoviesCardMore />
-    </main>
+    </ul>
   );
 }
 

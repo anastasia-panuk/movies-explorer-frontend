@@ -49,6 +49,7 @@ function SearchForm() {
           className="search-form__input search-form__input_type_mob"
           type={"search"}
           placeholder={"Фильм"}
+          required
         />
         <button className="search-form__submit-button search-form__submit-button_type_mob">
           Найти

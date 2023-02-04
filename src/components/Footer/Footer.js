@@ -25,8 +25,8 @@ function Footer() {
                     Учебный проект Яндекс.Практикум х BeatFilm.
                   </h2>
                   <div className="footer__container">
-                    <ul className="footer__link-container">
-                      <li className="footer__link">
+                    <ul className="footer__links-container">
+                      <li className="footer__link-container">
                         <a
                           className="footer__link"
                           href="https://practicum.yandex.ru/"
@@ -36,7 +36,7 @@ function Footer() {
                           Яндекс.Практикум
                         </a>
                       </li>
-                      <li className="footer__link">
+                      <li className="footer__link-container">
                         <a
                           className="footer__link"
                           href="https://github.com/"

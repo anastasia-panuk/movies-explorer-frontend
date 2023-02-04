@@ -32,6 +32,7 @@ function Register() {
               name="name"
               type="text"
               placeholder="Как Вас зовут?"
+              required
             ></input>
             <span className="form__input-span">E-mail</span>
             <input
@@ -39,6 +40,7 @@ function Register() {
               name="email"
               type="email"
               placeholder="Адрес Вашей электоронной почты"
+
             ></input>
             <span className="form__input-span">Пароль</span>
             <input
@@ -46,6 +48,7 @@ function Register() {
               name="password"
               type="password"
               placeholder="Ваш надежный пароль"
+              required
             ></input>
           </>
         }

@@ -1,0 +1,23 @@
+.account-button {
+  display: flex;
+  width: 100px;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.account-button__container {
+  position: relative;
+  background-color: #313131;
+  width: 26px;
+  height: 30px;
+  border-radius: 4px;
+}
+
+.account-button__icon {
+  padding: 0;
+  margin: 0;
+  position: relative;
+  top: 8px;
+}

@@ -42,12 +42,16 @@
   padding-top: 20px;
 }
 
-.footer__link-container {
+.footer__links-container {
   display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
   column-gap: 20px;
+}
+
+.footer__link-container {
+  transition: 0.3s;
 }
 
 .footer__link {
@@ -56,10 +60,9 @@
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
-  transition: 0.3s;
 }
 
-.footer__link:hover {
+.footer__link-container:hover {
   transform: scale(1.1);
 }
 
@@ -89,7 +92,7 @@
     line-height: 15px;
   }
 
-  .footer__link-container {
+  .footer__links-container {
     flex-direction: column;
     align-items: center;
     row-gap: 12px;

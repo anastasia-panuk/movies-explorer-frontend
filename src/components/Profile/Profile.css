@@ -70,6 +70,10 @@
   transition: 0.3s;
 }
 
+.profile__form-input:focus {
+  border-bottom: 1px solid #4285F4;
+}
+
 .profile__form-submit-button:hover {
   transform: scale(1.03);
 }

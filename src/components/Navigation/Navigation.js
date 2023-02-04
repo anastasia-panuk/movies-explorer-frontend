@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import icon from "../../images/login_icon.svg";
+import AccountButton from "../AccountButton/AccountButton";
 
 function Navigation() {
   return (
@@ -19,29 +19,18 @@ function Navigation() {
           </Link>
         </li>
         <li className="navigation__burger-menu-item-container">
-          <Link to="/movies" className="navigation__burger-menu-item" href="#">
+          <Link to="/movies" className="navigation__burger-menu-item">
             Фильмы
           </Link>
         </li>
         <li className="navigation__burger-menu-item-container">
-          <Link
-            to="/saved-movies"
-            className="navigation__burger-menu-item"
-            href="#"
-          >
+          <Link to="/saved-movies" className="navigation__burger-menu-item">
             Сохраненный фильмы
           </Link>
         </li>
         <li className="navigation__burger-menu-item-container">
-          <Link
-            to="/profile"
-            className="navigation__burger-menu-item header__button_type_account"
-            href="#"
-          >
-            Аккаунт
-            <div className="header__button-square">
-              <img className="header__button-icon" src={icon} alt="Иконка" />
-            </div>
+          <Link to="/profile" className="navigation__burger-menu-item">
+            <AccountButton name="navigation__burger-menu-item_type_account"></AccountButton>
           </Link>
         </li>
       </ul>
