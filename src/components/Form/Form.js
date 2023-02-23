@@ -1,6 +1,6 @@
-function Form({ name, submitButton, linkBlock, children }) {
+function Form({ name, submitButton, linkBlock, children, onSubmit }) {
   return (
-    <form className={`form form_type_${name}`}>
+    <form className={`form form_type_${name}`} onSubmit={onSubmit}>
       <div className="form__container">{children}</div>
       <div className="form__button-container">
         {submitButton}

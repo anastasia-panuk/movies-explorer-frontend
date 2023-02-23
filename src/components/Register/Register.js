@@ -2,17 +2,35 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Form from "../Form/Form";
 
-function Register() {
+function Register({ onRegisterSubmit }) {
+  const [state, setState] = React.useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  function handleChange(evt) {
+    const { name, value } = evt.target;
+    setState({
+      ...state,
+      [name]: value,
+    });
+  }
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    const { name, email, password } = state;
+    onRegisterSubmit(name, email, password);
+}
+
   return (
     <main className="register">
       <Form
         name="register"
         submitButton={
-          <Link to="/signin">
             <button className="form__submit-button" type="submit">
               Зарегистрироваться
             </button>
-          </Link>
         }
         linkBlock={
           <p className="form__text">
@@ -23,6 +41,7 @@ function Register() {
             </Link>
           </p>
         }
+        onSubmit={handleSubmit}
       >
         {
           <>
@@ -33,6 +52,8 @@ function Register() {
               type="text"
               placeholder="Как Вас зовут?"
               required
+              minLength="2"
+              onChange={handleChange}
             ></input>
             <span className="form__input-span">E-mail</span>
             <input
@@ -40,7 +61,8 @@ function Register() {
               name="email"
               type="email"
               placeholder="Адрес Вашей электоронной почты"
-
+              onChange={handleChange}
+              required
             ></input>
             <span className="form__input-span">Пароль</span>
             <input
@@ -48,6 +70,8 @@ function Register() {
               name="password"
               type="password"
               placeholder="Ваш надежный пароль"
+              minLength="8"
+              onChange={handleChange}
               required
             ></input>
           </>

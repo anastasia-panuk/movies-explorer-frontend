@@ -1,18 +1,23 @@
 import React from "react";
-import moviesArray from "../../utils/constants";
+// import moviesArray from "../../utils/constants";
 
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardsList() {
+function MoviesCardsList({ movies }) {
+
   return (
     <ul className="movies-cards-list">
-      {moviesArray.map((movie) => (
-        <MoviesCard
-          name={movie.name}
-          img={movie.img}
-          duration={movie.duration}
-        />
-      ))}
+      {movies.map((movie) => {
+        return (
+          <MoviesCard
+            key={movie.id}
+            name={movie.nameRU}
+            link={movie.trailerLink}
+            img={movie.image.url}
+            duration={movie.duration}
+          />
+        );
+      })}
     </ul>
   );
 }

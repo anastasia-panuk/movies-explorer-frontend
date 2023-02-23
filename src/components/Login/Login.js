@@ -2,17 +2,34 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Form from "../Form/Form";
 
-function Login() {
+function Login({ onLoginSubmit }) {
+  const [state, setState] = React.useState({
+    email: "",
+    password: "",
+  });
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setState({
+      ...state,
+      [name]: value,
+    })
+  }
+
+    function handleSubmit(evt) {
+      evt.preventDefault();
+      const { email, password } = state;
+      onLoginSubmit(email, password);
+    }
+
   return (
     <main className="login">
       <Form
         name="login"
         submitButton={
-          <Link to="/movies">
             <button className="form__submit-button" type="submit">
               Войти
             </button>
-          </Link>
         }
         linkBlock={
           <p className="form__text">
@@ -23,6 +40,7 @@ function Login() {
             </Link>
           </p>
         }
+        onSubmit={handleSubmit}
       >
         {
           <>
@@ -32,6 +50,7 @@ function Login() {
               name="email"
               type="email"
               placeholder="Адрес Вашей электоронной почты"
+              onChange={handleChange}
               required
             ></input>
             <span className="form__input-span">Пароль</span>
@@ -40,6 +59,8 @@ function Login() {
               name="password"
               type="password"
               placeholder="Ваш надежный пароль"
+              minLength="8"
+              onChange={handleChange}
               required
             ></input>
           </>
