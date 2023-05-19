@@ -5,9 +5,8 @@ import Navigation from "../Navigation/Navigation";
 import AccountButton from "../AccountButton/AccountButton";
 
 import logo from "../../images/logo.svg";
-// import icon from "../../images/login_icon.svg";
 
-function Header() {
+function Header({ isLoggedIn }) {
   const pathname = ["/movies", "/saved-movies", "profile"];
 
   const fullHeader = (
@@ -66,16 +65,36 @@ function Header() {
               <HashLink to={{ pathname: "/", hash: "about-project" }}>
                 <img className="header__logo" src={logo} alt="Логотип" />
               </HashLink>
-              <nav className="header__conteiner">
-                <Link to="/signup">
-                  <button className="header__button">Регистрация</button>
-                </Link>
-                <Link to="/signin">
-                  <button className="header__button header__button_type_login">
-                    Войти
-                  </button>
-                </Link>
-              </nav>
+              {isLoggedIn ? (
+                <nav className="header__conteiner">
+                  <Link to="/signup">
+                    <button className="header__button">Регистрация</button>
+                  </Link>
+                  <Link to="/signin">
+                    <button className="header__button header__button_type_login">
+                      Войти
+                    </button>
+                  </Link>
+                </nav>
+              ) : (
+                <nav className="header__conteiner header__conteiner_type_logged-in">
+                  <div className="header__button-container">
+                    <Link to="/movies" className="header__link">
+                      <button className="header__button header__button_type_logged-in">
+                        Фильмы
+                      </button>
+                    </Link>
+                    <Link to="/saved-movies" className="header__link">
+                      <button className="header__button header__button_type_logged-in">
+                        Сохраненные фильмы
+                      </button>
+                    </Link>
+                  </div>
+                  <Link to={"/profile"} className="header__link">
+                    <AccountButton name={"header__button"}></AccountButton>
+                  </Link>
+                </nav>
+              )}
             </header>
           }
         ></Route>
@@ -99,7 +118,7 @@ function Header() {
                 <HashLink to={{ pathname: "/", hash: "about-project" }}>
                   <img className="header__logo" src={logo} alt="Логотип" />
                 </HashLink>
-                <h2 className="header__welcome-text">Добро пожаловать!</h2>
+                <h2 className="header__welcome-text">{"Добро пожаловать!"}</h2>
               </div>
             </header>
           }

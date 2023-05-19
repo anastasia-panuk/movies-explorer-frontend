@@ -1,36 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Form from "../Form/Form";
+import { useFormWithValidation } from "../../hooks/validationHook";
 
 function Register({ onRegisterSubmit }) {
-  const [state, setState] = React.useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
 
-  function handleChange(evt) {
-    const { name, value } = evt.target;
-    setState({
-      ...state,
-      [name]: value,
-    });
+  function handleSubmit(e) {
+    e.preventDefault();
+    onRegisterSubmit(values.name, values.email, values.password);
   }
-
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    const { name, email, password } = state;
-    onRegisterSubmit(name, email, password);
-}
 
   return (
     <main className="register">
       <Form
         name="register"
         submitButton={
-            <button className="form__submit-button" type="submit">
-              Зарегистрироваться
-            </button>
+          <button
+            className={!isValid
+              ? "form__submit-button form__submit-button_type_disabled"
+              : "form__submit-button"}
+            type="submit"
+            disabled={!isValid}
+          >
+            Зарегистрироваться
+          </button>
         }
         linkBlock={
           <p className="form__text">
@@ -42,38 +36,55 @@ function Register({ onRegisterSubmit }) {
           </p>
         }
         onSubmit={handleSubmit}
+        isValid={isValid}
       >
         {
           <>
-            <span className="form__input-span">Имя</span>
+            <label htmlFor="register-name" className="form__input-span">
+              Имя
+            </label>
             <input
               className="form__input"
+              id="register-name"
               name="name"
+              value={values.name || ""}
               type="text"
               placeholder="Как Вас зовут?"
               required
               minLength="2"
+              maxLength="30"
               onChange={handleChange}
             ></input>
-            <span className="form__input-span">E-mail</span>
+            <span className="form__input_error-text">{errors.name}</span>
+            <label htmlFor="register-email" className="form__input-span">
+              E-mail
+            </label>
             <input
               className="form__input"
+              id="register-email"
               name="email"
+              value={values.email || ""}
               type="email"
               placeholder="Адрес Вашей электоронной почты"
               onChange={handleChange}
               required
             ></input>
-            <span className="form__input-span">Пароль</span>
+            <span className="form__input_error-text">{errors.email}</span>
+            <label htmlFor="register-password" className="form__input-span">
+              Пароль
+            </label>
             <input
               className="form__input"
+              id="register-password"
               name="password"
               type="password"
               placeholder="Ваш надежный пароль"
               minLength="8"
+              value={values.password || ""}
               onChange={handleChange}
               required
             ></input>
+            <span className="form__input_error-text">{errors.password}</span>
           </>
         }
       </Form>

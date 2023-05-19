@@ -1,41 +1,41 @@
 @keyframes preloader-inside-white {
   0% {
-      -webkit-transform: scale(0, 0);
-      -moz-transform: scale(0, 0);
-      -ms-transform: scale(0, 0);
-      -o-transform: scale(0, 0);
-      transform: scale(0, 0);
+    -webkit-transform: scale(0, 0);
+    -moz-transform: scale(0, 0);
+    -ms-transform: scale(0, 0);
+    -o-transform: scale(0, 0);
+    transform: scale(0, 0);
   }
   100% {
-      -webkit-transform: scale(1, 1);
-      -moz-transform: scale(1, 1);
-      -ms-transform: scale(1, 1);
-      -o-transform: scale(1, 1);
-      transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
   }
 }
 
 @keyframes preloader-inside-red {
   0% {
-      -webkit-transform: scale(0, 0);
-      -moz-transform: scale(0, 0);
-      -ms-transform: scale(0, 0);
-      -o-transform: scale(0, 0);
-      transform: scale(0, 0);
+    -webkit-transform: scale(0, 0);
+    -moz-transform: scale(0, 0);
+    -ms-transform: scale(0, 0);
+    -o-transform: scale(0, 0);
+    transform: scale(0, 0);
   }
   30% {
-      -webkit-transform: scale(0, 0);
-      -moz-transform: scale(0, 0);
-      -ms-transform: scale(0, 0);
-      -o-transform: scale(0, 0);
-      transform: scale(0, 0);
+    -webkit-transform: scale(0, 0);
+    -moz-transform: scale(0, 0);
+    -ms-transform: scale(0, 0);
+    -o-transform: scale(0, 0);
+    transform: scale(0, 0);
   }
   100% {
-      -webkit-transform: scale(1, 1);
-      -moz-transform: scale(1, 1);
-      -ms-transform: scale(1, 1);
-      -o-transform: scale(1, 1);
-      transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
   }
 }
 
@@ -47,6 +47,11 @@
   height: 100%;
   z-index: 10;
   padding: 20px;
+}
+
+.preloader_type_hidden {
+  visibility: hidden;
+  display: none;
 }
 
 .preloader__container {
@@ -65,9 +70,16 @@
   border-radius: 50px;
 }
 
+.preloader__error-text {
+  z-index: 15;
+  text-align: center;
+  padding-top: 50px;
+  font-size: 18px;
+}
+
 .preloader__round::after,
 .preloader__round::before {
-  content: '';
+  content: "";
   width: 100px;
   height: 100px;
   position: absolute;
@@ -83,6 +95,6 @@
 
 .preloader__round::before {
   z-index: 10;
-  background: #3DDC84;
+  background: #3ddc84;
   animation: preloader-inside-red 1s ease-in-out infinite;
 }

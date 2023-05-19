@@ -7,20 +7,11 @@
   padding: 80px 70px 10px;
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 339px));
   align-self: center;
   align-items: center;
   justify-content: center;
   gap: 37px 24px;
-}
-
-.movies-cards-list::before {
-  position: absolute;
-  top: 0;
-  left: 5.6%;
-  width: 89%;
-  border-top: 1px solid #424242;
-  content: "";
 }
 
 @media screen and (max-width: 768px) {
@@ -28,12 +19,6 @@
     padding: 70px 30px 30px;
     gap: 30px;
     grid-template-columns: repeat(auto-fit, minmax(300px, 339px));
-  }
-
-  .movies-cards-list::before {
-    top: -0.6%;
-    left: 4%;
-    width: 92%;
   }
 }
 

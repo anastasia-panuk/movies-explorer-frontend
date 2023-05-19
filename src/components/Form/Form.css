@@ -64,6 +64,17 @@
   text-decoration: none;
 }
 
+.form__submit-button_type_disabled {
+  background: #8b8b8b;
+}
+
+.form__input_error-text {
+  color: #ee3465;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+}
+
 .form__input-span:first-of-type {
   padding-top: 0;
 }

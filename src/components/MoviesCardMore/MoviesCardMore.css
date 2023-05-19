@@ -20,6 +20,10 @@
   transition: 0.3s;
 }
 
+.movies-card-more_type_hidden {
+  visibility: hidden;
+}
+
 .movies-card-more__button:hover {
   cursor: pointer;
   transform: scale(1.1);

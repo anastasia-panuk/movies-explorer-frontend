@@ -26,6 +26,7 @@
 }
 
 .profile__form-container {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   padding-bottom: 203px;
@@ -70,8 +71,26 @@
   transition: 0.3s;
 }
 
+.profile__error-text {
+  position: absolute;
+  color: #ee3465;
+  top: 12%;
+  right: 1%;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.profile__form-submit-button_type_disabled {
+  color: #8b8b8b;
+}
+
+.profile__error-text:last-of-type {
+  top: 29.5%;
+}
+
 .profile__form-input:focus {
-  border-bottom: 1px solid #4285F4;
+  border-bottom: 1px solid #4285f4;
 }
 
 .profile__form-submit-button:hover {
@@ -122,5 +141,13 @@
 
   .profile__form-container {
     padding-bottom: 356px;
+  }
+
+  .profile__error-text {
+    top: 8.5%;
+  }
+
+  .profile__error-text:last-of-type {
+    top: 20%;
   }
 }

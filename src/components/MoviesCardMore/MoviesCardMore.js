@@ -1,9 +1,11 @@
 import React from "react";
 
-function MoviesCardMore() {
+function MoviesCardMore({ addMovieToList, className }) {
   return (
     <section className="movies-card-more">
-      <button className="movies-card-more__button">Ещё</button>
+      <button className={className} type="button" onClick={addMovieToList}>
+        Ещё
+      </button>
     </section>
   );
 }
