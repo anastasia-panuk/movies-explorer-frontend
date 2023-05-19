@@ -131,6 +131,7 @@ function App() {
       const movieArray = handleSearchMovieSubmit(request, movies);
       if (movieArray.length > 0) {
         setIsNotFound(false);
+        setIsServerError(true);
         setFiltredMovies(movieArray);
         localStorage.setItem("searchMovieList", JSON.stringify(movieArray));
       } else {
@@ -140,6 +141,7 @@ function App() {
       const movieArray = handleSearchMovieSubmit(request, movies);
       if (movieArray.length > 0) {
         setIsNotFound(false);
+        setIsServerError(true);
         setFiltredMovies(movieArray);
       } else {
         setIsNotFound(true);
@@ -148,6 +150,7 @@ function App() {
         const movieArrayCheckedByDuration = checkMovieDuration(movieArray);
         if (movieArrayCheckedByDuration.length > 0) {
           setIsNotFound(false);
+          setIsServerError(true);
         } else {
           setIsNotFound(true);
         }
@@ -292,7 +295,6 @@ function App() {
         setMovies(movies);
       })
       .catch((err) => {
-        setIsServerError(true);
         setErrorMessege(err.messege);
       });
   }, [loggedIn]);
@@ -305,7 +307,6 @@ function App() {
         localStorage.setItem("savedMovies", JSON.stringify(movies));
       })
       .catch((err) => {
-        setIsServerError(true);
         setErrorMessege(err.messege);
       });
   }, [jwt, loggedIn]);
