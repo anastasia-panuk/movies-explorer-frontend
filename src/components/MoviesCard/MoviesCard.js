@@ -39,6 +39,10 @@ function MoviesCard({
     setIsHovering(true);
   }
 
+  function handleTouchStart() {
+    setIsHovering(true);
+  }
+
   function handleMouseOut() {
     setIsHovering(false);
   }
@@ -67,6 +71,7 @@ function MoviesCard({
           className="movies-card__container"
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
+          onTouchStart={handleTouchStart}
         >
           <h2 className="movies-card__name">{`${name}`}</h2>
           {isSaved ? (

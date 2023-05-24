@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import Form from "../Form/Form";
 import { useFormWithValidation } from "../../hooks/validationHook";
 
-function Login({ onLoginSubmit }) {
-  const { values, handleChange, errors, isValid } =
-    useFormWithValidation();
+function Login({ onLoginSubmit, isSucsess }) {
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -51,6 +50,7 @@ function Login({ onLoginSubmit }) {
               name="email"
               type="email"
               value={values.email || ""}
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
               placeholder="Адрес Вашей электоронной почты"
               onChange={handleChange}
               required
@@ -73,6 +73,9 @@ function Login({ onLoginSubmit }) {
             <span className="form__input_error-text">{errors.password}</span>
           </>
         }
+        <span className="profile__ok-messege_type_error">
+          {isSucsess ? "Что-то пошло не так! Проверьте актуальность почты и пароля." : ""}
+        </span>
       </Form>
     </main>
   );

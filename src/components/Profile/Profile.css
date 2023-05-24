@@ -81,8 +81,40 @@
   line-height: 12px;
 }
 
+.profile__ok-messege {
+  padding-top: 16px;
+  color: #237e1e;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.profile__ok-messege_type_error {
+  padding-top: 16px;
+  color: #ee3465;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+}
+
 .profile__form-submit-button_type_disabled {
   color: #8b8b8b;
+  transition: none;
+  background: none;
+  border: none;
+  outline: none;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  cursor: pointer;
+  align-self: center;
+  padding: 0;
+}
+
+.profile__form-submit-button_type_disabled:hover {
+  transform: none;
 }
 
 .profile__error-text:last-of-type {

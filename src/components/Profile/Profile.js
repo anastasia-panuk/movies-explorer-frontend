@@ -2,26 +2,39 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 
-function Profile({ onProfileSubmit, onLogout }) {
+function Profile({ onProfileSubmit, onLogout, isOk }) {
   const currentUser = React.useContext(CurrentUserContext);
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [isNameValid, setIsNameValid] = React.useState(true);
   const [isEmailValid, setIsEmailValid] = React.useState(true);
+  const [isDisabled, setIsDisabled] = React.useState(true);
+  const [isSucsess, setIssucsess] = React.useState(false);
 
   React.useEffect(() => {
     setName(currentUser.name);
     setEmail(currentUser.email);
+    setIsDisabled(true);
   }, [currentUser]);
 
   function handleName(e) {
     setName(e.target.value);
     setIsNameValid(e.target.checkValidity());
+    if (name === currentUser.name) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
   }
 
   function handleEmail(e) {
     setEmail(e.target.value);
     setIsEmailValid(e.target.checkValidity());
+    if (email === currentUser.email) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
   }
 
   function handleSubmit(evt) {
@@ -31,6 +44,7 @@ function Profile({ onProfileSubmit, onLogout }) {
       name: name,
       email: email,
     });
+    setIssucsess(true);
     form.reset();
   }
 
@@ -59,6 +73,7 @@ function Profile({ onProfileSubmit, onLogout }) {
             className="profile__form-input"
             name="email"
             type="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
             placeholder="Ваша новая почта"
             onChange={handleEmail}
             value={email}
@@ -70,18 +85,31 @@ function Profile({ onProfileSubmit, onLogout }) {
         </div>
         <button
           className={
-            !isNameValid || !isEmailValid
-              ? "profile__form-submit-button profile__form-submit-button_type_disabled"
+            isDisabled
+              ? "profile__form-submit-button_type_disabled"
               : "profile__form-submit-button"
           }
           type="submit"
-          disabled={!isNameValid || !isEmailValid}
+          disabled={isDisabled}
         >
           Редактировать
         </button>
         <Link to="/signin" className="profile__form-link" onClick={onLogout}>
           <p className="profile__form-link">Выйти из аккаунта</p>
         </Link>
+        {isSucsess ? (
+          isOk ? (
+            <span className="profile__ok-messege">
+              Данные профиля успешно обновлены
+            </span>
+          ) : (
+            <span className="profile__ok-messege_type_error">
+              Что-то пошло не так...
+            </span>
+          )
+        ) : (
+          <span className="profile__ok-messege"></span>
+        )}
       </form>
     </main>
   );

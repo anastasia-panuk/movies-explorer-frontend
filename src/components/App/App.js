@@ -47,25 +47,27 @@ function App() {
   const [savedMoviesFiltredByDuration, setSavedMoviesFiltredByDuration] =
     React.useState([]);
 
-  const [isChecked, setIsChecked] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isNotFound, setIsNotFound] = React.useState(false);
   const [errorMessege, setErrorMessege] = React.useState("");
   const [isServerError, setIsServerError] = React.useState(false);
+
+  const [isOk, setIsOk] = React.useState(false);
+  const [isSucsessLogin, setIsSucsessLogin] = React.useState(false);
+  const [isSucsessRegister, setIsSucsessRegister] = React.useState(false);
   const pathname = useLocation();
+  const navigate = useNavigate();
 
   const isLocationMovies = pathname.pathname === "/movies";
   const isLocationSavedMovies = pathname.pathname === "/saved-movies";
+
+  const jwt = localStorage.getItem("jwt");
 
   function changeDurationFilter() {
     isLocationMovies
       ? setIsMovieFiltred(!isMovieFiltred)
       : setIsSavedMovieFiltred(!isSavedMovieFiltred);
   }
-
-  const navigate = useNavigate();
-
-  const jwt = localStorage.getItem("jwt");
 
   //регистрация, авторизация пользователя
   function handleRegisterSubmit(name, email, password) {
@@ -74,6 +76,9 @@ function App() {
         handleLoginSubmit(email, password);
       })
       .catch((err) => {
+        if (err === 409) {
+          setIsSucsessRegister(true);
+        }
         console.log(err);
       });
   }
@@ -84,9 +89,12 @@ function App() {
         if (!token) throw new Error("Нет токена!");
         localStorage.setItem("jwt", token);
         setLoggedIn(true);
-        navigate("/movies");
+        navigate(pathname.pathname);
       })
       .catch((err) => {
+        if (err === 401) {
+          setIsSucsessLogin(true);
+        }
         console.log(err);
       });
   }
@@ -99,8 +107,12 @@ function App() {
           name: data.name,
           email: data.email,
         });
+        setIsOk(true);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setIsOk(false);
+        console.log(err);
+      });
   }
 
   //поиск по фильмам
@@ -119,6 +131,7 @@ function App() {
   }
 
   async function searchMovie(request) {
+    setIsNotFound(false);
     setIsLoading(true);
     let promise = new Promise((resolve, reject) => {
       setIsNotFound(false);
@@ -146,18 +159,6 @@ function App() {
       } else {
         setIsNotFound(true);
       }
-      if (isMovieFiltred) {
-        const movieArrayCheckedByDuration = checkMovieDuration(movieArray);
-        if (movieArrayCheckedByDuration.length > 0) {
-          setIsNotFound(false);
-          setIsServerError(true);
-        } else {
-          setIsNotFound(true);
-        }
-        setIsChecked(true);
-      } else {
-        setIsChecked(false);
-      }
     }
   }
 
@@ -174,6 +175,9 @@ function App() {
     if (savedMovies.length > 0) {
       const movieArray = handleSearchSavedMovieSubmit(request, savedMovies);
       if (movieArray.length > 0) {
+        if (isSavedMovieFiltred) {
+          setSavedMoviesFiltredByDuration(checkMovieDuration(movieArray));
+        }
         setIsNotFound(false);
         setIsServerError(true);
         setSavedFiltredMovies(movieArray);
@@ -198,58 +202,60 @@ function App() {
     return shortMovieArray;
   }
 
+  function handleSavedMoviesList() {
+    changeDurationFilter();
+    if (isLocationSavedMovies) {
+      if (!isSavedMovieFiltred) {
+        localStorage.setItem("isSavedCheckedByDuretion", isSavedMovieFiltred);
+        if (movies.length > 0) {
+          const movieArray = checkMovieDuration(savedFiltredMovies);
+          if (movieArray.length > 0) {
+            setIsNotFound(false);
+          } else {
+            setIsNotFound(true);
+          }
+          setSavedMoviesFiltredByDuration(movieArray);
+          localStorage.setItem(
+            "filtredSavedMoviesByDurationList",
+            JSON.stringify(movieArray)
+          );
+        }
+      }
+    }
+  }
+
   React.useEffect(() => {
+    if (!isLocationSavedMovies) {
+      setIsSavedMovieFiltred(false);
+      setSavedFiltredMovies(savedMovies);
+    }
     setIsNotFound(false);
-    localStorage.setItem("isCheckedByDuretion", isMovieFiltred);
     if (isLocationMovies) {
       if (isMovieFiltred) {
+        localStorage.setItem("isCheckedByDuretion", isMovieFiltred);
         if (movies.length > 0) {
+          setIsNotFound(false);
           const movieArray = checkMovieDuration(filtredMovies);
           if (movieArray.length > 0) {
             setIsNotFound(false);
           } else {
             setIsNotFound(true);
           }
-          setFiltredMoviesByDuration(movieArray);
           localStorage.setItem(
             "filtredMoviesByDuration",
             JSON.stringify(movieArray)
           );
-          setIsChecked(true);
-        }
-      } else {
-        setIsChecked(false);
-      }
-    } else {
-      localStorage.setItem("isSavedCheckedByDuretion", isSavedMovieFiltred);
-      if (isLocationSavedMovies) {
-        if (isSavedMovieFiltred) {
-          if (movies.length > 0) {
-            const movieArray = checkMovieDuration(savedFiltredMovies);
-            if (movieArray.length > 0) {
-              setIsNotFound(false);
-            } else {
-              setIsNotFound(true);
-            }
-            setSavedMoviesFiltredByDuration(movieArray);
-            localStorage.setItem(
-              "savedMoviesFiltredByDuration",
-              JSON.stringify(movieArray)
-            );
-          }
-          setIsChecked(true);
-        } else {
-          setIsChecked(false);
+          setFiltredMoviesByDuration(movieArray);
         }
       }
     }
   }, [
+    filtredMoviesByDuration,
     isLocationMovies,
-    isLocationSavedMovies,
     isMovieFiltred,
-    isSavedMovieFiltred,
     movies.length,
-    savedFiltredMovies,
+    savedMovies,
+    isLocationSavedMovies,
     filtredMovies,
   ]);
 
@@ -293,18 +299,29 @@ function App() {
       .then((movies) => {
         localStorage.setItem("moviesList", JSON.stringify(movies));
         setMovies(movies);
+        if (!isMovieFiltred) {
+          localStorage.setItem("isCheckedByDuretion", isMovieFiltred);
+          const movieArrayCheckedByDuration = checkMovieDuration(movies);
+          if (movieArrayCheckedByDuration.length > 0) {
+            setIsNotFound(false);
+            setIsServerError(true);
+          } else {
+            setIsNotFound(true);
+          }
+          setFiltredMoviesByDuration(movieArrayCheckedByDuration);
+        }
       })
       .catch((err) => {
         setErrorMessege(err.messege);
       });
-  }, [loggedIn]);
+  }, [isMovieFiltred, loggedIn]);
 
   React.useEffect(() => {
     Promise.resolve(getSavedMovies(jwt))
       .then((movies) => {
         setSavedMovies(movies);
-        setSavedFiltredMovies(movies);
         localStorage.setItem("savedMovies", JSON.stringify(movies));
+        setSavedFiltredMovies(movies);
       })
       .catch((err) => {
         setErrorMessege(err.messege);
@@ -319,6 +336,7 @@ function App() {
         if (user && user.email) {
           setCurrentUser(user);
           setLoggedIn(true);
+          navigate(pathname.pathname);
         } else {
           console.log(user);
         }
@@ -330,6 +348,11 @@ function App() {
 
   //данные с локального хранилища
   React.useEffect(() => {
+    const moviesList = localStorage.getItem("moviesList");
+    if (moviesList) {
+      setMovies(JSON.parse(moviesList));
+    }
+
     const searchMovieList = localStorage.getItem("searchMovieList");
     if (searchMovieList) {
       setFiltredMovies(JSON.parse(searchMovieList));
@@ -404,14 +427,24 @@ function App() {
           <Route
             path={"/signup"}
             element={
-              <Register onRegisterSubmit={handleRegisterSubmit}></Register>
+              !loggedIn ? (
+                <Register
+                  onRegisterSubmit={handleRegisterSubmit}
+                  isSucsess={isSucsessRegister}
+                ></Register>
+              ) : (
+                <Navigate to={"/"} />
+              )
             }
           ></Route>
           <Route
             path={"/signin"}
             element={
               !loggedIn ? (
-                <Login onLoginSubmit={handleLoginSubmit}></Login>
+                <Login
+                  onLoginSubmit={handleLoginSubmit}
+                  isSucsess={isSucsessLogin}
+                ></Login>
               ) : (
                 <Navigate to={"/movies"} />
               )
@@ -424,9 +457,10 @@ function App() {
                 <Profile
                   onProfileSubmit={handleProfileSubmit}
                   onLogout={handleLogout}
+                  isOk={isOk}
                 ></Profile>
               ) : (
-                <Navigate to={"/signin"} />
+                <Navigate to={"/"} />
               )
             }
           ></Route>
@@ -447,12 +481,12 @@ function App() {
                   savedMovies={savedMovies}
                   isLaoding={isLoading}
                   isNotFound={isNotFound}
-                  isChecked={isChecked}
+                  isChecked={isMovieFiltred}
                   error={errorMessege}
                   isServerError={isServerError}
                 ></Movies>
               ) : (
-                <Navigate to={"/signin"} />
+                <Navigate to={"/"} />
               )
             }
           ></Route>
@@ -470,16 +504,16 @@ function App() {
                   onMovieSearchRequest={searchMovie}
                   onSavedMovieSearchRequest={searchSavedMovie}
                   onDeleteMovie={removeMovieFromSavedMoviesList}
-                  changeDurationFilter={changeDurationFilter}
+                  changeDurationFilter={handleSavedMoviesList}
                   savedMovies={savedMovies}
                   isLaoding={isLoading}
                   isNotFound={isNotFound}
-                  isChecked={isChecked}
+                  isChecked={isSavedMovieFiltred}
                   error={errorMessege}
                   isServerError={isServerError}
                 />
               ) : (
-                <Navigate to={"/signin"} />
+                <Navigate to={"/"} />
               )
             }
           ></Route>

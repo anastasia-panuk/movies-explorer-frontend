@@ -14,7 +14,7 @@ function MoviesCardsList({
   return (
     <>
       {isNotFound ? (
-        isServerError ? (
+        !isServerError ? (
           <span className="preloader__error-text">{error}</span>
         ) : (
           <span className="preloader__error-text">Ничего не найдено</span>

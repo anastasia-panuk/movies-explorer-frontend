@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Form from "../Form/Form";
 import { useFormWithValidation } from "../../hooks/validationHook";
 
-function Register({ onRegisterSubmit }) {
+function Register({ onRegisterSubmit, isSucsess }) {
   const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   function handleSubmit(e) {
@@ -17,9 +17,11 @@ function Register({ onRegisterSubmit }) {
         name="register"
         submitButton={
           <button
-            className={!isValid
-              ? "form__submit-button form__submit-button_type_disabled"
-              : "form__submit-button"}
+            className={
+              !isValid
+                ? "form__submit-button form__submit-button_type_disabled"
+                : "form__submit-button"
+            }
             type="submit"
             disabled={!isValid}
           >
@@ -64,6 +66,7 @@ function Register({ onRegisterSubmit }) {
               id="register-email"
               name="email"
               value={values.email || ""}
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
               type="email"
               placeholder="Адрес Вашей электоронной почты"
               onChange={handleChange}
@@ -87,6 +90,9 @@ function Register({ onRegisterSubmit }) {
             <span className="form__input_error-text">{errors.password}</span>
           </>
         }
+        <span className="profile__ok-messege_type_error">
+          {isSucsess ? "Пользователь с такой почтой уже зарегистрирован." : ""}
+        </span>
       </Form>
     </main>
   );
