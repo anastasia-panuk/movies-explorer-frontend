@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Form from "../Form/Form";
 import { useFormWithValidation } from "../../hooks/validationHook";
 
-function Login({ onLoginSubmit, isSucsess }) {
+function Login({ onLoginSubmit, isSucsess, errorMessege }) {
   const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   function handleSubmit(evt) {
@@ -74,7 +74,7 @@ function Login({ onLoginSubmit, isSucsess }) {
           </>
         }
         <span className="profile__ok-messege_type_error">
-          {isSucsess ? "Что-то пошло не так! Проверьте актуальность почты и пароля." : ""}
+          {isSucsess ? errorMessege : ""}
         </span>
       </Form>
     </main>

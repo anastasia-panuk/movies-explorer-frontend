@@ -55,6 +55,7 @@ function App() {
   const [isOk, setIsOk] = React.useState(false);
   const [isSucsessLogin, setIsSucsessLogin] = React.useState(false);
   const [isSucsessRegister, setIsSucsessRegister] = React.useState(false);
+  const [loginErrorMessege, setLoginErrorMessege] = React.useState("");
   const pathname = useLocation();
   const navigate = useNavigate();
 
@@ -94,6 +95,10 @@ function App() {
       .catch((err) => {
         if (err === 401) {
           setIsSucsessLogin(true);
+          setLoginErrorMessege("Что-то пошло не так! Проверьте актуальность почты или пороля.")
+        } else if (err === 400) {
+          setIsSucsessLogin(true);
+          setLoginErrorMessege("Проверьте корректность адреса электронной почты.")
         }
         console.log(err);
       });
@@ -444,6 +449,7 @@ function App() {
                 <Login
                   onLoginSubmit={handleLoginSubmit}
                   isSucsess={isSucsessLogin}
+                  errorMessege={loginErrorMessege}
                 ></Login>
               ) : (
                 <Navigate to={"/movies"} />
