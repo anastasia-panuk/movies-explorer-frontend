@@ -10,17 +10,17 @@ function SearchForm({
 }) {
   const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
   const [request, setRequest] = React.useState("");
-  const [isFocused, setIsFocused] = React.useState(false);
+  const [isValid, setIsValid] = React.useState(true);
   const [isDisabled, setIsDisabled] = React.useState(true);
 
   function handleSearch(e) {
     setRequest(e.target.value);
     if (e.target.value.length === 0) {
-      setIsFocused(true);
-      setIsDisabled(true);
-    } else {
-      setIsFocused(false);
       setIsDisabled(false);
+      setIsValid(false);
+    } else {
+      setIsDisabled(true);
+      setIsValid(true);
     }
   }
 
@@ -33,7 +33,14 @@ function SearchForm({
   function handleMovieSubmit(e) {
     e.preventDefault();
     const form = e.target;
-    onMovieSearchRequest(request);
+    if (request === null || request.length === 0) {
+      setIsDisabled(false);
+      setIsValid(false);
+    } else {
+      setIsDisabled(true);
+      setIsValid(true);
+      onMovieSearchRequest(request);
+    }
     localStorage.setItem("searchRequest", request);
     form.reset();
   }
@@ -41,16 +48,15 @@ function SearchForm({
   function handleSavedMovieSubmit(e) {
     e.preventDefault();
     const form = e.target;
-    onSavedMovieSearchRequest(request);
+    if (request === null || request.length === 0) {
+      setIsDisabled(false);
+      setIsValid(false);
+    } else {
+      setIsDisabled(true);
+      setIsValid(true);
+      onSavedMovieSearchRequest(request);
+    }
     form.reset();
-  }
-
-  function handleFocus(e) {
-    handleSearch(e);
-  }
-
-  function handleBlur() {
-    setIsFocused(false);
   }
 
   function handleDurationFilter() {
@@ -75,22 +81,16 @@ function SearchForm({
         placeholder={"Фильм"}
         onChange={handleSearch}
         value={request}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
       />
       <span className="search-form__error-text">
-        {!isFocused ? "" : "Введите название фильма"}
+        {isValid ? "" : "Введите название фильма"}
       </span>
       <img className="search-form__icon" src={searchIcon} alt="Иконка лупы" />
       <div className="search-form__container">
         <button
-          className={`${
-            isDisabled
-              ? "search-form__submit-button search-form__submit-button_type_disabled"
-              : "search-form__submit-button"
-          }`}
+          className="search-form__submit-button"
           type="submit"
-          disabled={isDisabled}
+          disabled={!isDisabled}
         >
           Найти
         </button>
@@ -124,20 +124,14 @@ function SearchForm({
           placeholder={"Фильм"}
           onChange={handleSearch}
           value={request}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
         />
         <span className="search-form__error-text search-form__error-text_type_mob">
-          {!isFocused ? "" : "Введите название фильма"}
+          {isValid ? "" : "Введите название фильма"}
         </span>
         <button
-          className={`${
-            isDisabled
-              ? "search-form__submit-button search-form__submit-button_type_mob search-form__submit-button_type_disabled"
-              : "search-form__submit-button search-form__submit-button_type_mob"
-          }`}
+          className="search-form__submit-button search-form__submit-button_type_mob"
           type="submit"
-          disabled={isDisabled}
+          disabled={!isDisabled}
         >
           Найти
         </button>
