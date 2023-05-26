@@ -84,6 +84,10 @@
   cursor: pointer;
 }
 
+.form__submit-button_type_disabled:hover {
+  transform: none;
+}
+
 .form__link:hover {
   cursor: pointer;
 }

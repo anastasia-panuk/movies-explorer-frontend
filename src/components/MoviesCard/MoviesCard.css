@@ -68,6 +68,16 @@
   transition: 0.01s;
 }
 
+.movies-card__delete-button_type_mob {
+  outline: none;
+  border: none;
+  background: none;
+  background-repeat: no-repeat;
+  background-image: url(../../images/delete_card.svg);
+  background-size: 6.84px 6.72px;
+  background-position: 50%;
+}
+
 .movies-card__delete-button_type_active:hover {
   transform: scale(1.1);
   cursor: pointer;

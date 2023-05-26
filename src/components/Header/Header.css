@@ -25,7 +25,30 @@
   column-gap: 30px;
 }
 
+.header__link_type_active {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  transition: 0.3s;
+  color: #ee3465;
+  text-decoration: none;
+}
+
 .header__button {
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  transition: 0.3s;
+  color: #fff;
+  padding: 0;
+  text-decoration: none;
+}
+
+.header__link {
   outline: none;
   border: none;
   background: none;
@@ -36,9 +59,6 @@
   transition: 0.3s;
   color: #fff;
   padding: 0;
-}
-
-.header__link {
   text-decoration: none;
 }
 
@@ -113,8 +133,9 @@
   padding-top: 40px;
 }
 
-.header__button:hover {
+.header__link:hover {
   transform: scale(1.1);
+  cursor: pointer;
 }
 
 .header__logo:hover {

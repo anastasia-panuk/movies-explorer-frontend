@@ -12,6 +12,8 @@ function MoviesCard({
 }) {
   const [isLiked, setIsLiked] = React.useState(false);
   const [isHovering, setIsHovering] = React.useState(false);
+  const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
+  const breakpoint = 768;
   const actualSavedMovies = savedMovies.find((i) => i.nameRU === movie.nameRU);
 
   const cardLikeButtonClassName = `${
@@ -19,6 +21,14 @@ function MoviesCard({
       ? "movies-card__like-button"
       : "movies-card__like-button_type_active"
   }`;
+
+  React.useEffect(() => {
+    const handleResizeWindow = () => setScreenWidth(window.innerWidth);
+    window.addEventListener("resize", handleResizeWindow);
+    return () => {
+      window.removeEventListener("resize", handleResizeWindow);
+    };
+  }, []);
 
   function heandleLike() {
     if (!isLiked) {
@@ -36,10 +46,6 @@ function MoviesCard({
   }
 
   function handleMouseOver() {
-    setIsHovering(true);
-  }
-
-  function handleTouchStart() {
     setIsHovering(true);
   }
 
@@ -71,13 +77,13 @@ function MoviesCard({
           className="movies-card__container"
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
-          onTouchStart={handleTouchStart}
         >
           <h2 className="movies-card__name">{`${name}`}</h2>
           {isSaved ? (
             <button
               className={
-                isHovering
+                screenWidth < breakpoint ?  "movies-card__delete-button_type_mob"
+                : isHovering
                   ? "movies-card__delete-button_type_active"
                   : "movies-card__delete-button"
               }

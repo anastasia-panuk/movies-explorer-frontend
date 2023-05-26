@@ -28,6 +28,7 @@ import {
   deleteMovie,
 } from "../../utils/MainApi/MainApi";
 import { getMoviesFromServer } from "../../utils/MoviesApi/MoviesApi";
+import { MOVIE_DURATION } from "../../utils/constants/constants";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState("");
@@ -36,7 +37,6 @@ function App() {
   const [isMovieFiltred, setIsMovieFiltred] = React.useState(false);
   const [isSavedMovieFiltred, setIsSavedMovieFiltred] = React.useState(false);
 
-  const [movies, setMovies] = React.useState([]);
   const [filtredMovies, setFiltredMovies] = React.useState([]);
   const [filtredMoviesByDuration, setFiltredMoviesByDuration] = React.useState(
     []
@@ -63,6 +63,7 @@ function App() {
   const isLocationSavedMovies = pathname.pathname === "/saved-movies";
 
   const jwt = localStorage.getItem("jwt");
+  const moviesList = JSON.parse(localStorage.getItem("moviesList"));
 
   function changeDurationFilter() {
     isLocationMovies
@@ -90,15 +91,19 @@ function App() {
         if (!token) throw new Error("Нет токена!");
         localStorage.setItem("jwt", token);
         setLoggedIn(true);
-        navigate(pathname.pathname);
+        navigate("/movies");
       })
       .catch((err) => {
         if (err === 401) {
           setIsSucsessLogin(true);
-          setLoginErrorMessege("Что-то пошло не так! Проверьте актуальность почты или пороля.")
+          setLoginErrorMessege(
+            "Что-то пошло не так! Проверьте актуальность почты или пороля."
+          );
         } else if (err === 400) {
           setIsSucsessLogin(true);
-          setLoginErrorMessege("Проверьте корректность адреса электронной почты.")
+          setLoginErrorMessege(
+            "Проверьте корректность адреса электронной почты."
+          );
         }
         console.log(err);
       });
@@ -145,8 +150,8 @@ function App() {
       setTimeout(() => resolve(setIsLoading(false)), 1000);
     });
     await promise;
-    if (movies.length > 0) {
-      const movieArray = handleSearchMovieSubmit(request, movies);
+    if (moviesList.length > 0) {
+      const movieArray = handleSearchMovieSubmit(request, moviesList);
       if (movieArray.length > 0) {
         setIsNotFound(false);
         setIsServerError(true);
@@ -156,7 +161,7 @@ function App() {
         setIsNotFound(true);
       }
     } else {
-      const movieArray = handleSearchMovieSubmit(request, movies);
+      const movieArray = handleSearchMovieSubmit(request, moviesList);
       if (movieArray.length > 0) {
         setIsNotFound(false);
         setIsServerError(true);
@@ -200,7 +205,7 @@ function App() {
   function checkMovieDuration(array) {
     let shortMovieArray = [];
     array.forEach((movie) => {
-      if (movie.duration <= 40) {
+      if (movie.duration <= MOVIE_DURATION) {
         shortMovieArray.push(movie);
       }
     });
@@ -212,7 +217,7 @@ function App() {
     if (isLocationSavedMovies) {
       if (!isSavedMovieFiltred) {
         localStorage.setItem("isSavedCheckedByDuretion", isSavedMovieFiltred);
-        if (movies.length > 0) {
+        if (savedMovies.length > 0) {
           const movieArray = checkMovieDuration(savedFiltredMovies);
           if (movieArray.length > 0) {
             setIsNotFound(false);
@@ -238,7 +243,7 @@ function App() {
     if (isLocationMovies) {
       if (isMovieFiltred) {
         localStorage.setItem("isCheckedByDuretion", isMovieFiltred);
-        if (movies.length > 0) {
+        if (moviesList.length > 0) {
           setIsNotFound(false);
           const movieArray = checkMovieDuration(filtredMovies);
           if (movieArray.length > 0) {
@@ -258,7 +263,6 @@ function App() {
     filtredMoviesByDuration,
     isLocationMovies,
     isMovieFiltred,
-    movies.length,
     savedMovies,
     isLocationSavedMovies,
     filtredMovies,
@@ -303,10 +307,9 @@ function App() {
     Promise.resolve(getMoviesFromServer())
       .then((movies) => {
         localStorage.setItem("moviesList", JSON.stringify(movies));
-        setMovies(movies);
         if (!isMovieFiltred) {
           localStorage.setItem("isCheckedByDuretion", isMovieFiltred);
-          const movieArrayCheckedByDuration = checkMovieDuration(movies);
+          const movieArrayCheckedByDuration = checkMovieDuration(moviesList);
           if (movieArrayCheckedByDuration.length > 0) {
             setIsNotFound(false);
             setIsServerError(true);
@@ -353,11 +356,6 @@ function App() {
 
   //данные с локального хранилища
   React.useEffect(() => {
-    const moviesList = localStorage.getItem("moviesList");
-    if (moviesList) {
-      setMovies(JSON.parse(moviesList));
-    }
-
     const searchMovieList = localStorage.getItem("searchMovieList");
     if (searchMovieList) {
       setFiltredMovies(JSON.parse(searchMovieList));
@@ -410,7 +408,7 @@ function App() {
     localStorage.removeItem("filtredSavedMoviesByDurationList");
     setIsMovieFiltred(false);
     setIsSavedMovieFiltred(false);
-    setMovies([]);
+    //setMovies([]);
     setSavedMovies([]);
     setFiltredMovies([]);
     setFiltredMoviesByDuration([]);

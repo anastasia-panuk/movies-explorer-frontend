@@ -6,10 +6,10 @@ function Profile({ onProfileSubmit, onLogout, isOk }) {
   const currentUser = React.useContext(CurrentUserContext);
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
-  const [isNameValid, setIsNameValid] = React.useState(true);
-  const [isEmailValid, setIsEmailValid] = React.useState(true);
   const [isDisabled, setIsDisabled] = React.useState(true);
   const [isSucsess, setIssucsess] = React.useState(false);
+  const [isInputDisabled, setIsInputDisabled] = React.useState(false);
+  const [isEdit, setIsEdit] = React.useState(false);
 
   React.useEffect(() => {
     setName(currentUser.name);
@@ -19,7 +19,6 @@ function Profile({ onProfileSubmit, onLogout, isOk }) {
 
   function handleName(e) {
     setName(e.target.value);
-    setIsNameValid(e.target.checkValidity());
     if (name === currentUser.name) {
       setIsDisabled(false);
     } else {
@@ -29,8 +28,7 @@ function Profile({ onProfileSubmit, onLogout, isOk }) {
 
   function handleEmail(e) {
     setEmail(e.target.value);
-    setIsEmailValid(e.target.checkValidity());
-    if (email === currentUser.email) {
+    if (e.target.value !== currentUser.email) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
@@ -39,13 +37,20 @@ function Profile({ onProfileSubmit, onLogout, isOk }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    setIsInputDisabled(true);
+    setIsDisabled(true);
     const form = evt.target;
     onProfileSubmit({
       name: name,
       email: email,
     });
     setIssucsess(true);
+    setIsInputDisabled(false);
     form.reset();
+  }
+
+  function handleClick() {
+    setIsEdit(true);
   }
 
   return (
@@ -63,40 +68,50 @@ function Profile({ onProfileSubmit, onLogout, isOk }) {
             value={name}
             minLength="2"
             maxLength="30"
-            required
+            disabled={!isEdit || isInputDisabled}
           />
-          <span className="profile__error-text">
-            {isNameValid ? "" : "Введите свое имя"}
-          </span>
           <span className="profile__form-input-span">E-mail</span>
           <input
             className="profile__form-input"
             name="email"
-            type="email"
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
             placeholder="Ваша новая почта"
             onChange={handleEmail}
             value={email}
-            required
+            disabled={!isEdit || isInputDisabled}
           />
-          <span className="profile__error-text">
-            {isEmailValid ? "" : "Введен некорректный адрес электронной почты"}
-          </span>
         </div>
-        <button
-          className={
-            isDisabled
-              ? "profile__form-submit-button_type_disabled"
-              : "profile__form-submit-button"
-          }
-          type="submit"
-          disabled={isDisabled}
-        >
-          Редактировать
-        </button>
-        <Link to="/signin" className="profile__form-link" onClick={onLogout}>
-          <p className="profile__form-link">Выйти из аккаунта</p>
-        </Link>
+
+        {!isEdit ? (
+          <>
+            <button
+              onClick={handleClick}
+              className={"profile__form-submit-button"}
+              type="button"
+            >
+              Редактировать
+            </button>
+            <Link
+              to="/signin"
+              className="profile__form-link"
+              onClick={onLogout}
+            >
+              <p className="profile__form-link">Выйти из аккаунта</p>
+            </Link>
+          </>
+        ) : (
+          <button
+            className={
+              isDisabled
+                ? "form__submit-button form__submit-button_type_disabled"
+                : "form__submit-button"
+            }
+            type="submit"
+            disabled={isDisabled}
+          >
+            Сохранить
+          </button>
+        )}
+
         {isSucsess ? (
           isOk ? (
             <span className="profile__ok-messege">
@@ -104,7 +119,7 @@ function Profile({ onProfileSubmit, onLogout, isOk }) {
             </span>
           ) : (
             <span className="profile__ok-messege_type_error">
-              Что-то пошло не так...
+              Что-то пошло не так!
             </span>
           )
         ) : (

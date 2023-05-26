@@ -1,13 +1,15 @@
 import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, NavLink } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import Navigation from "../Navigation/Navigation";
 import AccountButton from "../AccountButton/AccountButton";
 
 import logo from "../../images/logo.svg";
 
+import { TABLET_BREAKEPOINT } from "../../utils/constants/constants";
+
 function Header({ isLoggedIn }) {
-  const pathname = ["/movies", "/saved-movies", "profile"];
+  const pathname = ["/movies", "/saved-movies", "/profile"];
 
   const fullHeader = (
     <header className="header header_type_logged-in">
@@ -16,16 +18,17 @@ function Header({ isLoggedIn }) {
       </HashLink>
       <nav className="header__conteiner header__conteiner_type_logged-in">
         <div className="header__button-container">
-          <Link to="/movies" className="header__link">
-            <button className="header__button header__button_type_logged-in">
+          <NavLink to="/movies" className={({isActive}) => (isActive ? "header__link_type_active" : "header__link")}>
+
+          Фильмы
+            {/* <button className="header__button header__button_type_logged-in">
               Фильмы
-            </button>
-          </Link>
-          <Link to="/saved-movies" className="header__link">
-            <button className="header__button header__button_type_logged-in">
+            </button> */}
+
+          </NavLink>
+          <NavLink to="/saved-movies" className={({isActive}) => (isActive ? "header__link_type_active" : "header__link")}>
               Сохраненные фильмы
-            </button>
-          </Link>
+          </NavLink>
         </div>
         <Link to={"/profile"} className="header__link">
           <AccountButton name={"header__button"}></AccountButton>
@@ -44,7 +47,6 @@ function Header({ isLoggedIn }) {
   );
 
   const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
-  const breakpoint = 768;
 
   React.useEffect(() => {
     const handleResizeWindow = () => setScreenWidth(window.innerWidth);
@@ -79,16 +81,12 @@ function Header({ isLoggedIn }) {
               ) : (
                 <nav className="header__conteiner header__conteiner_type_logged-in">
                   <div className="header__button-container">
-                    <Link to="/movies" className="header__link">
-                      <button className="header__button header__button_type_logged-in">
+                    <NavLink to="/movies" className={({isActive}) => (isActive ? "header__link_type_active" : "header__link")}>
                         Фильмы
-                      </button>
-                    </Link>
-                    <Link to="/saved-movies" className="header__link">
-                      <button className="header__button header__button_type_logged-in">
+                    </NavLink>
+                    <NavLink to="/saved-movies" className={({isActive}) => (isActive ? "header__link_type_active" : "header__link")}>
                         Сохраненные фильмы
-                      </button>
-                    </Link>
+                    </NavLink>
                   </div>
                   <Link to={"/profile"} className="header__link">
                     <AccountButton name={"header__button"}></AccountButton>
@@ -104,7 +102,7 @@ function Header({ isLoggedIn }) {
         {pathname.map((path) => (
           <Route
             path={path}
-            element={screenWidth > breakpoint ? fullHeader : reducedHeader}
+            element={screenWidth > TABLET_BREAKEPOINT ? fullHeader : reducedHeader}
           ></Route>
         ))}
       </Routes>

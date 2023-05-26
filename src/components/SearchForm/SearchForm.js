@@ -1,5 +1,6 @@
 import React from "react";
 import searchIcon from "../../images/search_icon.svg";
+import { TABLET_BREAKEPOINT } from "../../utils/constants/constants";
 
 function SearchForm({
   onMovieSearchRequest,
@@ -62,8 +63,6 @@ function SearchForm({
   function handleDurationFilter() {
     changeDurationFilter();
   }
-
-  const breakpoint = 767;
 
   React.useEffect(() => {
     const handleResizeWindow = () => setScreenWidth(window.innerWidth);
@@ -161,7 +160,7 @@ function SearchForm({
       className="search-form"
       onSubmit={isSaved ? handleSavedMovieSubmit : handleMovieSubmit}
     >
-      {screenWidth > breakpoint ? desctopSearchForm : mobSearchForm}
+      {screenWidth > TABLET_BREAKEPOINT ? desctopSearchForm : mobSearchForm}
     </form>
   );
 }

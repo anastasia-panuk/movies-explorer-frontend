@@ -4,6 +4,23 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardsList from "../MoviesCardList/MoviesCardList";
 import MoviesCardMore from "../MoviesCardMore/MoviesCardMore";
 import Preloader from "../Preloader/Preloader";
+import {
+  MOB_BREAKEPOINT,
+  TABLET_BREAKEPOINT,
+  DESKTOP_BREAKEPOINT,
+
+  NUMBER_OF_MOB_MOVIES,
+  NUMBER_OF_TABLET_MOVIES,
+  NUMBER_OF_DESKTOP_MOVIES,
+
+  NUMBER_OF_MORE_MOB_MOVIES,
+  NUMBER_OF_MORE_TABLET_MOVIES,
+  NUMBER_OF_MORE_DESKTOP_MOVIES,
+
+  NUMBER_OF_MORE_ADD_TO_MOB_MOVIES,
+  NUMBER_OF_MORE_ADD_TO_TABLET_MOVIES,
+  NUMBER_OF_MORE_ADD_TO_DESKTOP_MOVIES,
+} from "../../utils/constants/constants";
 
 function Movies({
   movies,
@@ -21,23 +38,23 @@ function Movies({
 }) {
   const [movieInList, setMovieInList] = React.useState(() => {
     const screenWidth = window.innerWidth;
-    if (screenWidth >= 1280) {
-      return 12;
-    } else if (screenWidth >= 768) {
-      return 8;
-    } else if (screenWidth >= 456) {
-      return 5;
+    if (screenWidth >= DESKTOP_BREAKEPOINT) {
+      return NUMBER_OF_DESKTOP_MOVIES;
+    } else if (screenWidth >= TABLET_BREAKEPOINT) {
+      return NUMBER_OF_TABLET_MOVIES;
+    } else if (screenWidth >= MOB_BREAKEPOINT) {
+      return NUMBER_OF_MOB_MOVIES;
     }
   });
 
   const [addMovieToMoviesList, setAddMovieToMoviesList] = React.useState(() => {
     const screenWidth = window.innerWidth;
-    if (screenWidth >= 1280) {
-      return 3;
-    } else if (screenWidth >= 768) {
-      return 2;
-    } else if (screenWidth >= 456) {
-      return 1;
+    if (screenWidth >= DESKTOP_BREAKEPOINT) {
+      return NUMBER_OF_MORE_DESKTOP_MOVIES;
+    } else if (screenWidth >= TABLET_BREAKEPOINT) {
+      return NUMBER_OF_MORE_TABLET_MOVIES;
+    } else if (screenWidth >= MOB_BREAKEPOINT) {
+      return NUMBER_OF_MORE_MOB_MOVIES;
     }
   });
 
@@ -51,19 +68,22 @@ function Movies({
 
   function changeScreenWidth() {
     const screenWidth = window.innerWidth;
-    if (screenWidth >= 1280) {
-      setMovieInList(12);
-      setAddMovieToMoviesList(4);
-    } else if (screenWidth >= 768) {
-      setMovieInList(8);
-      setAddMovieToMoviesList(3);
-    } else if (screenWidth >= 456) {
-      setMovieInList(5);
-      setAddMovieToMoviesList(2);
+    if (screenWidth >= DESKTOP_BREAKEPOINT) {
+      setMovieInList(NUMBER_OF_DESKTOP_MOVIES);
+      setAddMovieToMoviesList(NUMBER_OF_MORE_ADD_TO_DESKTOP_MOVIES);
+    } else if (screenWidth >= TABLET_BREAKEPOINT) {
+      setMovieInList(NUMBER_OF_TABLET_MOVIES);
+      setAddMovieToMoviesList(NUMBER_OF_MORE_ADD_TO_TABLET_MOVIES);
+    } else if (screenWidth >= MOB_BREAKEPOINT) {
+      setMovieInList(NUMBER_OF_MOB_MOVIES);
+      setAddMovieToMoviesList(NUMBER_OF_MORE_ADD_TO_MOB_MOVIES);
     }
   }
   React.useEffect(() => {
     window.addEventListener("resize", changeScreenWidth);
+    return () => {
+      window.removeEventListener("resize", changeScreenWidth);
+    };
   }, []);
 
   function addMovieToList() {
