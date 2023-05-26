@@ -1,0 +1,129 @@
+.navigation__toggle {
+  opacity: 0;
+}
+
+.navigation__toggle:checked + .navigation__button > span {
+  transform: rotate(45deg);
+}
+.navigation__toggle:checked + .navigation__button > span::before {
+  top: 0;
+  transform: rotate(0deg);
+}
+.navigation__toggle:checked + .navigation__button > span::after {
+  top: 0;
+  transform: rotate(90deg);
+}
+.navigation__toggle:checked ~ .navigation__burger-menu {
+  right: 0 !important;
+}
+.navigation__button {
+  position: fixed;
+  top: 30px;
+  right: 37px;
+  width: 30px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 1;
+}
+.navigation__button > span,
+.navigation__button > span::before,
+.navigation__button > span::after {
+  display: block;
+  position: absolute;
+  top: 7px;
+  width: 100%;
+  height: 2px;
+  background-color: #fff;
+  transition-duration: 0.25s;
+}
+.navigation__button > span::before {
+  content: "";
+  top: -9px;
+}
+.navigation__button > span::after {
+  content: "";
+  top: 9px;
+}
+.navigation__burger-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  max-width: 520px;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 130px 0;
+  list-style: none;
+  background-color: #202020;
+  transition-duration: 0.25s;
+  color: #fff;
+}
+
+.navigation__burger-menu-item-container {
+  padding-top: 28px;
+  padding-bottom: 2px;
+}
+
+.navigation__burger-menu-item {
+  color: #fff;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  text-decoration: none;
+}
+
+.navigation__burger-menu-item-container:last-of-type {
+  padding-top: 615px;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.navigation__burger-menu-item:hover {
+  border-bottom: 2px #fff solid;
+}
+
+.navigation__burger-menu-item_type_account {
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 22px;
+  transition: 0.3s;
+  color: #fff;
+  padding: 0;
+}
+
+.navigation__burger-menu-item_type_account:hover {
+  border-bottom: 2px #fff solid;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation__burger-menu-item_type_account {
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+
+@media screen and (max-width: 456px) {
+  .navigation__burger-menu {
+    padding-top: 118px;
+  }
+
+  .navigation__burger-menu-item-container {
+    padding-top: 24px;
+  }
+
+  .navigation__button {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+  }
+
+  .navigation__burger-menu-item-container:last-of-type {
+    padding-top: 444px;
+  }
+}

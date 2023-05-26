@@ -1,0 +1,36 @@
+.movies-card-more {
+  width: inherit;
+  display: flex;
+  justify-content: center;
+  padding: 50px 0 100px;
+}
+
+.movies-card-more__button {
+  background: none;
+  outline: none;
+  border: none;
+  max-width: 320px;
+  height: 36px;
+  width: 100%;
+  background-color: #2f2f2f;
+  color: #fff;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  transition: 0.3s;
+}
+
+.movies-card-more_type_hidden {
+  visibility: hidden;
+}
+
+.movies-card-more__button:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+@media screen and (max-width: 768px) {
+  .movies-card-more {
+    padding: 50px 0 80px;
+  }
+}
